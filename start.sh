@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # kill daemons in case of restart
-wg-quick down /opt/amnezia/awg/wg0.conf
+if [ -f /opt/amnezia/awg/wg0.conf ]; then (wg-quick down /opt/amnezia/awg/wg0.conf); fi
 
 # start daemons if configured
 if [ -f /opt/amnezia/awg/wg0.conf ]; then (wg-quick up /opt/amnezia/awg/wg0.conf); fi
