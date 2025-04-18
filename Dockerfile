@@ -1,7 +1,11 @@
 FROM amneziavpn/amnezia-wg:latest
 
-RUN apk add --no-cache dumb-init mc curl tshark && apk upgrade --no-cache
-COPY --chmod=a+x start.sh /opt/amnezia/
+
+COPY start.sh /opt/amnezia/
+RUN apk add --no-cache dumb-init mc curl tshark \
+  && apk upgrade --no-cache \
+  && chmod a+x /opt/amnezia/start.sh
+
 RUN echo -e " \n\
     fs.file-max = 51200 \n\
     \n\
