@@ -3,8 +3,10 @@
 test -z "$1" && WG_STARTUP_SCRIPT=/opt/amnezia/start-wg.sh || WG_STARTUP_SCRIPT="$1"
 
 if [ -f  "$WG_STARTUP_SCRIPT" ]; then
+    echo "Executing WG startup script $WG_STARTUP_SCRIPT"
     # shellcheck disable=SC1090
     . "$WG_STARTUP_SCRIPT";
+    echo "Done executing WG startup script"
 else
     echo "WG startup script not found $WG_STARTUP_SCRIPT" | tee 1>&2
     exit 1
