@@ -1,7 +1,15 @@
 #!/bin/sh
 
-if [ -f /opt/amnezia/start-wg.sh ]; then . /opt/amnezia/start-wg.sh; fi
+test -z "$1" && WG_STARTUP_SCRIPT=/opt/amnezia/start-wg.sh || WG_STARTUP_SCRIPT="$1"
 
-echo "Entering infinite loop"
+if [ -f  "$WG_STARTUP_SCRIPT" ]; then
+    # shellcheck disable=SC1090
+    . "$WG_STARTUP_SCRIPT";
+else
+    echo "WG startup script not found $WG_STARTUP_SCRIPT" | tee 1>&2
+    exit 1
+fi
+
+echo "Entering infinite loop..."
 tail -f /dev/null
-echo "Container exit"
+echo "Container exit."
