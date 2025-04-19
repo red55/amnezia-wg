@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test -z "$1" && WG_STARTUP_SCRIPT=/opt/amnezia/start-wg.sh || WG_STARTUP_SCRIPT="$1"
+test -z "$1" && WG_STARTUP_SCRIPT="/opt/amnezia/start-wg.sh" || WG_STARTUP_SCRIPT="$1"
 
 if [ -f  "$WG_STARTUP_SCRIPT" ]; then
     echo "Executing WG startup script $WG_STARTUP_SCRIPT"
