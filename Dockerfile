@@ -4,7 +4,7 @@ FROM amneziavpn/amnezia-wg:latest
 COPY --chown=root:root --chmod=ug=rx,o=r ./start.sh /opt/amnezia/
 RUN chmod a+x /opt/amnezia/start.sh
 
-RUN apk add --no-cache dumb-init mc curl tshark iptables\
+RUN apk add --no-cache dumb-init mc curl tshark ip6tables\
   && apk upgrade --no-cache
 
 RUN echo -e " \n\
