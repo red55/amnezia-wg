@@ -1,4 +1,4 @@
-FROM amneziavpn/amnezia-wg:latest
+FROM amneziavpn/amneziawg-go:latest
 
 
 COPY --chown=root:root --chmod=ug=rx,o=r ./start.sh /opt/amnezia/
