@@ -1,7 +1,8 @@
 #!/bin/sh
 set -eou pipefail
 
-test -z "$1" && WG_STARTUP_SCRIPT="/opt/amnezia/start-wg.sh" || WG_STARTUP_SCRIPT="$1"
+ARG1=${1:-""}
+test -z "$ARG1" && WG_STARTUP_SCRIPT="/opt/amnezia/start-wg.sh" || WG_STARTUP_SCRIPT="$ARG1"
 
 if [ -f  "$WG_STARTUP_SCRIPT" ]; then
     echo "Executing WG startup script $WG_STARTUP_SCRIPT"
