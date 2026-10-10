@@ -26,5 +26,5 @@ jobs:
         env:
           NODE_ENV: production
         run: |
-          docker buildx build --tag red55/amnezia-wg:latest .
+          docker buildx build --target final --tag red55/amnezia-wg:latest .
           docker push red55/amnezia-wg:latest
