@@ -38,7 +38,7 @@ RUN echo -e " \n\
     echo -e " \n\
     * soft nofile 51200 \n\
     * hard nofile 51200 \n\
-    " | sed -e 's/^\s\+//g' | tee -a /etc/security/limits.conf \
+    " | sed -e 's/^\s\+//g' | tee -a /etc/security/limits.conf
 
 FROM base AS final
 
