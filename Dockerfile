@@ -1,11 +1,12 @@
-FROM amneziavpn/amneziawg-go:latest
+FROM docker.io/amneziavpn/amneziawg-go:latest AS base
 
 
 COPY --chown=root:root --chmod=ug=rx,o=r ./start.sh /opt/amnezia/
 RUN chmod a+x /opt/amnezia/start.sh
 
-RUN apk add --no-cache dumb-init mc curl tshark ip6tables\
-  && apk upgrade --no-cache
+RUN --mount=type=cache,target=/var/cache/apk \
+  apk upgrade && apk add dumb-init mc curl tshark ip6tables
+
 
 RUN echo -e " \n\
     fs.file-max = 51200 \n\
@@ -15,6 +16,7 @@ RUN echo -e " \n\
     net.core.netdev_max_backlog = 250000 \n\
     net.core.somaxconn = 4096 \n\
     \n\
+    net.ipv4.conf.all.src_valid_mark = 1 \n\
     net.ipv4.tcp_syncookies = 1 \n\
     net.ipv4.tcp_tw_reuse = 1 \n\
     net.ipv4.tcp_tw_recycle = 0 \n\
@@ -36,7 +38,9 @@ RUN echo -e " \n\
     echo -e " \n\
     * soft nofile 51200 \n\
     * hard nofile 51200 \n\
-    " | sed -e 's/^\s\+//g' | tee -a /etc/security/limits.conf
+    " | sed -e 's/^\s\+//g' | tee -a /etc/security/limits.conf \
 
-  ENTRYPOINT [ "dumb-init", "/opt/amnezia/start.sh" ]
-  CMD [ "" ]
+FROM base AS final
+RUN sed -i 's/\(\[\[ \$proto == -4 \]\] && cmd sysctl -q net\.ipv4\.conf\.all\.src_valid_mark=1\)$/# \1/' /usr/bin/awg-quick
+ENTRYPOINT [ "dumb-init", "/opt/amnezia/start.sh" ]
+CMD [ "" ]

@@ -1,0 +1,21 @@
+services:
+  awg:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - ghcr.io/red55/amnezia-wg:latest
+    container_name: awg
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_MODULE
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark: "1"
+    ports:
+      - "44906:44906"
+    volumes:
+      - ./start.sh:/opt/amnezia/start.sh:ro
+      - ./wg0.conf:/etc/amnezia/amneziawg/wg0.conf:ro
