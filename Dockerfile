@@ -41,6 +41,8 @@ RUN echo -e " \n\
     " | sed -e 's/^\s\+//g' | tee -a /etc/security/limits.conf \
 
 FROM base AS final
+
+# hadolint ignore=SC2016r
 RUN sed -i 's/\(\[\[ \$proto == -4 \]\] && cmd sysctl -q net\.ipv4\.conf\.all\.src_valid_mark=1\)$/# \1/' /usr/bin/awg-quick
 ENTRYPOINT [ "dumb-init", "/opt/amnezia/start.sh" ]
 CMD [ "" ]
