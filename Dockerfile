@@ -5,7 +5,7 @@ COPY --chown=root:root --chmod=ug=rx,o=r ./start.sh /opt/amnezia/
 RUN chmod a+x /opt/amnezia/start.sh
 
 RUN --mount=type=cache,target=/var/cache/apk \
-  apk upgrade && apk add dumb-init mc curl tshark ip6tables
+  apk upgrade && apk add dumb-init mc curl tshark ip6tables openresolv
 
 
 RUN echo -e " \n\
